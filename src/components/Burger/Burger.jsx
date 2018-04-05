@@ -8,7 +8,7 @@ const burger = (props) => {
                                     (_,i) => <BurgerIngredient key = {igkey + i} type = {igkey}/> )
                          );
     return (
-        <div class = {classes.Burger}>
+        <div className = {classes.Burger}>
             <BurgerIngredient type = 'bread-top'/>
                       {ingredients}
             <BurgerIngredient type = 'bread-bottom'/>
