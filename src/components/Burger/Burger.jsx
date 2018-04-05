@@ -3,11 +3,14 @@ import classes from './Burger.css'
 import BurgerIngredient from './BurgerIngredients/BurgerIngredients';
 
 const burger = (props) => {
+    const ingredients = Object.keys(props.ingredients)
+                        .map( igkey => [...Array(props.ingredients[igkey])].map( 
+                                    (_,i) => <BurgerIngredient key = {igkey + i} type = {igkey}/> )
+                         );
     return (
         <div class = {classes.Burger}>
             <BurgerIngredient type = 'bread-top'/>
-            <BurgerIngredient type = 'cheese'/>
-            <BurgerIngredient type = 'meat'/>
+                      {ingredients}
             <BurgerIngredient type = 'bread-bottom'/>
         </div>
     );
