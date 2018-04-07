@@ -3,22 +3,26 @@ import classes from './Modal.css';
 import A from '../../../hoc/Auxx';
 import Backdrop from '../Backdrop/Backdrop';
 
-const modal = (props) => {
-
-    return (
+class Modal extends React.Component {
+    shouldComponentUpdate(nextProps, nextState){
+        return this.props.showModal !== nextProps.showModal
+    }
+    render() {
+        return(
         <A>
-            <Backdrop show ={props.showModal} clicked = {props.modalClosed}/>
+            <Backdrop show ={this.props.showModal} clicked = {this.props.modalClosed}/>
             <div 
                 className = {classes.Modal}
                 style = {{
-                    transform: props.showModal ? 'translateY(0)': 'translateY(-100vh)',
-                    opacity: props.showModal ? '1' : '0'
+                    transform: this.props.showModal ? 'translateY(0)': 'translateY(-100vh)',
+                    opacity: this.props.showModal ? '1' : '0'
                 }}>
-                {props.children}
+                {this.props.children}
             </div>
         </A>
-    );
+        );
+    }
 }
 
 
-export default modal;
+export default Modal;
