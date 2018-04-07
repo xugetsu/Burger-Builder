@@ -1,0 +1,18 @@
+.Menu {
+  padding: 0 5px 6px 5px ;
+}
+.Menu div{
+    margin-top: 6px;
+    width: 30px;
+    height: 3px;
+    background: rgb(255, 255, 255);
+}
+
+.Menu:hover{
+    background:#8F5C2C;
+}
+@media(min-width:500px){
+    .Menu{
+        display: none;
+    }
+}
