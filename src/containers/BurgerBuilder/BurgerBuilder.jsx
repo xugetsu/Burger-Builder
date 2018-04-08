@@ -5,6 +5,7 @@ import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import axios from '../../axios-orders';
+import Spinner from '../../components/UI/Spinner/Spinner';
 
 const INGREDIENT_PRICES = {
     salad: 0.5,
@@ -23,6 +24,7 @@ class BurgerBuilder extends Component {
         totalPrice: 4,
         purchasable: false,
         purchasing: false,
+        loading: false,
     }
     updatePurchaseState = (ingredients) => {
         return Object.values(ingredients)
@@ -64,6 +66,7 @@ class BurgerBuilder extends Component {
         this.setState({purchasing: false});
     }
     purchaseContinueHandler = () =>{
+        this.setState({loading: true});
         const order = {
             ingredients: this.state.ingredients,
             price: this.state.totalPrice, // this is not the setup that will be use it in a real app
@@ -79,8 +82,8 @@ class BurgerBuilder extends Component {
             deliveryMethode: 'Fastest' 
         };      
         axios.post('/orders.json', order)
-            .then( response => console.log('success'))
-            .catch( error => console.log('error'));
+            .then ( response => {this.setState({loading: false, purchasing: false});})
+            .catch( error    => {this.setState({loading: false, purchasing: false});});
     }     
 
     render () {
@@ -90,15 +93,20 @@ class BurgerBuilder extends Component {
         for (let key in disableInfo){
             disableInfo[key] = disableInfo[key] <= 0
         }
+        let order = <OrderSummary 
+                        ingredients = {this.state.ingredients}
+                        purchaseCancelled ={this.purchaseCancelHandler}
+                        purchaseContinued ={this.purchaseContinueHandler}
+                        totalPrice = {this.state.totalPrice}/>;
+        if(this.state.loading){
+            order = <Spinner />;
+            console.log('set to loading mode ')
+        }    
         return (
             <A>
                 <Modal showModal = {this.state.purchasing} 
                         modalClosed = {this.purchaseCancelHandler} >
-                  <OrderSummary 
-                        ingredients = {this.state.ingredients}
-                        purchaseCancelled ={this.purchaseCancelHandler}
-                        purchaseContinued ={this.purchaseContinueHandler}
-                        totalPrice = {this.state.totalPrice}/>
+                    {order}
                 </Modal>
                 <Burger ingredients = {this.state.ingredients} />
                 <BuildControls 
