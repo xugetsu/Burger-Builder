@@ -1,6 +1,7 @@
 import React from 'react';
 import A from '../../../hoc/Auxx';
 import Button from '../../UI/Button/Button';
+//import {NavLink} from 'react-router-dom';
 const orderSummary = (props) => {
     const ingredientSummary = Object.keys(props.ingredients)
         .map( ingkey => 
@@ -20,6 +21,12 @@ const orderSummary = (props) => {
                 </ul>
                 <p><strong>Total Price: {props.totalPrice.toFixed(2)}</strong></p>
                 <p>Continue to checkout?</p>
+                {/* <NavLink to={{
+                                pathname: '/Checkout',
+                                state : props.ingredients
+                            }}>
+                  <Button btnType ="Success" clicked ={() => null}>CONTINUE</Button>
+                </NavLink> */}
                 <Button btnType ="Success" clicked={props.purchaseContinued}>CONTINUE</Button>
                 <Button btnType ="Danger" clicked={props.purchaseCancelled}>CANCEL</Button>
             </A>

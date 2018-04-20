@@ -73,27 +73,53 @@ class BurgerBuilder extends Component {
         this.setState({purchasing: false});
     }
     purchaseContinueHandler = () =>{
-        this.setState({purchaseLoading: true});
-        const order = {
-            ingredients: this.state.ingredients,
-            price: this.state.totalPrice, // this is not the setup that will be use it in a real app
-            cutomer: {                     // the price need to be calculated in the server !!
-                 name: 'Ali othmani',
-                 address: {
-                     street: 'TestStreet1',
-                     zipCode: '16846815',
-                     country: 'LolliWorld'
-                 },
-            },
-            email: 'test@test.com',
-            deliveryMethode: 'Fastest' 
-        };      
-        axios.post('/orders.json', order)
-            .then ( response => {this.setState({purchaseLoading: false, purchasing: false});})
-            .catch( error    => {this.setState({purchaseLoading: false, purchasing: false});});
+
+        const queryParams = []; // prepare a list of prop value pairs in the form 'prop=value' 
+        for(let prop in this.state.ingredients){
+            queryParams.push(encodeURIComponent(prop)+'='+encodeURIComponent(this.state.ingredients[prop])); 
+        }
+        const queryString = queryParams.join('&');
+        this.props.history.push({
+            pathname: '/Checkout',
+            search: queryString // A queryString string needs to be added here as the search value
+                                // it always begin with ? mark and then pairs of prop and value 
+                                // in 'prop=value' form seperated by & symbol.
+        });
+
+        // const queryParams = [];
+        // for(let prop in this.state.ingredients) {
+        //     const value = this.state.ingredients[prop];
+        //     queryParams.push(encodeURIComponent(prop) + '=' + encodeURIComponent(value));
+        // }
+        // //console.log('queryParams',queryParams);
+        // const queryString = queryParams.join('&');
+        // this.props.history.push({
+        //     pathname: '/Checkout',
+        //     search: '?' + queryString
+        // });
+        // this.setState({purchaseLoading: true});
+        // const order = {
+        //     ingredients: this.state.ingredients,
+        //     price: this.state.totalPrice, // this is not the setup that will be use it in a real app
+        //     cutomer: {                     // the price need to be calculated in the server !!
+        //          name: 'Ali othmani',
+        //          address: {
+        //              street: 'TestStreet1',
+        //              zipCode: '16846815',
+        //              country: 'LolliWorld'
+        //          },
+        //     },
+        //     email: 'test@test.com',
+        //     deliveryMethode: 'Fastest' 
+        // };      
+        // axios.post('/orders.json', order)
+        //     .then ( response => {this.setState({purchaseLoading: false, purchasing: false});})
+        //     .catch( error    => {this.setState({purchaseLoading: false, purchasing: false});});
+        
     }     
 
     render () {
+        //console.log(this.props);
         const disableInfo = {
             ...this.state.ingredients
         };
