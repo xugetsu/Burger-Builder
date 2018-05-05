@@ -47,7 +47,7 @@ class ContactData extends Component {
                 },
                 value: ''
             },
-            deliveryMethode:{
+            deliveryMethod:{
                 elementType: 'select',
                 elementConfig: {
                     options:[
@@ -55,7 +55,7 @@ class ContactData extends Component {
                         {value:'cheapest',displayValue:'Cheapest'},
                     ]
                 },
-                value: ''
+                value: 'Cheapest'
             },
         },
         purchaseLoading:false,
@@ -63,7 +63,12 @@ class ContactData extends Component {
     orderHandler = (event) =>{
         event.preventDefault();
         this.setState({purchaseLoading: true});
+        const formData = {};
+        for( let orderFormIdentifier in this.state.orderForm){
+            formData[orderFormIdentifier]= this.state.orderForm[orderFormIdentifier].value;
+        }
         const order = {
+            orderData: formData,
             ingredients: this.props.ingredients,
             price: this.props.totalPrice // this is not the setup that will be use it in a real app
         };       
@@ -97,9 +102,9 @@ class ContactData extends Component {
                                                     value={inputSetup.value}
                                                     changed={(e) => this.onChangeHandler(e, inputSetupKey)}/>
                             });
-            data = (<form>
+            data = (<form onSubmit = {this.orderHandler}>
                         {inputs}
-                        <Button btnType='Success' clicked = {this.orderHandler}>ORDER</Button>
+                        <Button btnType='Success'>ORDER</Button>
                     </form>);
         }
         return (
