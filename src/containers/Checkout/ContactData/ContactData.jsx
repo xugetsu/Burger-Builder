@@ -74,7 +74,13 @@ class ContactData extends Component {
             .catch( error    => {this.setState({purchaseLoading: false});});
 
     }
-    
+    onChangeHandler = (event, inputIdentifier) => {
+        const updatedOrderForm = {
+            ...this.state.orderForm
+        };
+        updatedOrderForm[inputIdentifier].value= event.target.value;
+        this.setState({orderForm:updatedOrderForm});
+    }
     render(){
 
         let data = null;
@@ -88,7 +94,8 @@ class ContactData extends Component {
                                     return <Input   key={inputSetupKey}
                                                     elementType={inputSetup.elementType} 
                                                     elementConfig={inputSetup.elementConfig}
-                                                    value={inputSetup.value}/>
+                                                    value={inputSetup.value}
+                                                    changed={(e) => this.onChangeHandler(e, inputSetupKey)}/>
                             });
             data = (<form>
                         {inputs}
