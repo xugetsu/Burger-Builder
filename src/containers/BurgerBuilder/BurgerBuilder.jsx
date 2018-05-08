@@ -80,7 +80,7 @@ class BurgerBuilder extends Component {
         queryParams.push('totalPrice='+encodeURIComponent(this.state.totalPrice));
         const queryString = queryParams.join('&');
         this.props.history.push({
-            pathname: '/Checkout',
+            pathname: '/burger-builder/Checkout',
             search: "?" + queryString // A queryString string needs to be added here as the search value
                                 // it always begin with ? mark and then pairs of prop and value 
                                 // in 'prop=value' form seperated by & symbol.

@@ -23,7 +23,7 @@ class Checkout extends Component{
         //console.log('[checkout]',this.props);
     }
     checkoutContinedHandler = () => {
-        this.props.history.replace('/Checkout/contact-data');
+        this.props.history.replace('/burger-builder/Checkout/contact-data');
     }
     checkoutCanceledHandler = () => {
         this.props.history.goBack();
