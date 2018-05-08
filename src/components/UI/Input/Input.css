@@ -19,5 +19,9 @@
     display: block;
 }
 .InputElement:focus{
-    background-color: aquamarine;
+    background-color: rgb(255, 244, 196);
+}
+.Invalid{
+    background-color: rgb(255, 217, 213);
+    border: 1px solid red;
 }
